@@ -1,0 +1,6 @@
+services:
+  app:
+    build: .
+    container_name: ba-getdatafromnsp
+    env_file:
+      - .env
