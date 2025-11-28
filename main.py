@@ -33,7 +33,6 @@ load_dotenv()
 def main():
     engine = get_engine()
     timestamp = get_last_updated(engine)
-    print(timestamp)
     response = api_fetch(timestamp)
     data = response.json()
     df = pd.DataFrame(data['Data'])
