@@ -2,12 +2,10 @@ import logging
 from sqlalchemy import text
 from utils.create_dim_df import create_dim_df
 from utils.create_ticket_df import create_ticket_df
-from utils.get_engine import get_engine
 
 #######################################################################
 
-def write_to_sql(df):
-    engine = get_engine()
+def write_to_sql(engine, df):
     agent_groups_df = create_dim_df(df, 'AgentGroup.Id', 'AgentGroup', 'id', 'group')
     task_types_df = create_dim_df(df, 'u_Opgavetype.Id', 'u_Opgavetype', 'id', 'type')
     task_areas_df = create_dim_df(df, 'u_Omrder.Id', 'u_Omrder', 'id', 'area')

@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-def api_fetch():
+def api_fetch(timestamp):
     url = os.getenv('API_URL')
     payload = json.dumps({
     'entityType': 'Ticket',
@@ -28,7 +28,8 @@ def api_fetch():
         'u_Afslutning',
         'u_Opgavetype',
         'u_Omrder',
-        'u_Afvisningsrsag'],
+        'u_Afvisningsrsag',
+        'UpdatedDate'],
     'filters': {
         'logic': 'and',
         'filters': [{
@@ -38,7 +39,7 @@ def api_fetch():
             {
             'field': 'UpdatedDate',
             'operator': 'gte',
-            'value': os.getenv('LAST_READ')}
+            'value': timestamp}
             ]
         }
     })

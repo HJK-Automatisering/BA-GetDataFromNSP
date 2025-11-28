@@ -24,7 +24,8 @@ def create_ticket_df(df):
         'u_Omrder.Id': 'task_area_id',
         'u_Afvisningsrsag.Id': 'reason_for_rejection_id',
         'CreatedDate': 'created_date',
-        'CloseDateTime': 'closed_date'})
+        'CloseDateTime': 'closed_date',
+        'UpdatedDate': 'last_updated'})
 
     ticket_df = ticket_df[[
         'id',
@@ -42,7 +43,8 @@ def create_ticket_df(df):
         'processing_days',
         'task_type_id',
         'task_area_id',
-        'reason_for_rejection_id']]
+        'reason_for_rejection_id',
+        'last_updated']]
     
     id_cols = [
         'open_days',
