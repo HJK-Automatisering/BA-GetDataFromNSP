@@ -10,7 +10,7 @@ Formålet med projektet er at automatisere dataindsamlingen fra NSP, så man und
 - normaliserer og validerer data
 - opdaterer faktatabellen `tickets`
 - genererer og vedligeholder dimensionstabeller
-- skriver alt til SQL uden dubletter via upsert/`MERGE`
+- skriver alt til SQL uden dubletter via upsert/merge
 
 Processen kører i et simpelt loop med et tidsinterval styret af miljøvariablen `SCRIPT_RUNTIME`.
 
@@ -22,7 +22,7 @@ Hver iteration i tjenesten udfører:
 2. Hent NSP-tickets opdateret siden dette tidspunkt.
 3. Rens og normalisér data (kolonner, tekstfelter, datoer).
 4. Udled dimensionstabeller.
-5. Skriv faktadata og dimensioner til SQL via upsert/`MERGE`.
+5. Skriv faktadata og dimensioner til SQL via upsert/merge.
 6. Vent det antal sekunder der er angivet i `SCRIPT_RUNTIME` og kør igen.
 
 ## Projektstruktur
