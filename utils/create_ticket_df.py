@@ -5,21 +5,12 @@ import time
 #######################################################################
 
 def create_ticket_df(df):
-    today = pd.to_datetime(pd.Timestamp.today().normalize())
     date_cols = ['CreatedDate', 'CloseDateTime', 'u_Opstart', 'u_Afslutning']
     for col in date_cols:
         df[col] = pd.to_datetime(df[col], errors='coerce')
-    df['open_days'] = (df['CloseDateTime'] - df['CreatedDate']).dt.days + 1
-    df['duration'] = (df['u_Afslutning'] - df['u_Opstart']).dt.days + 1
-    df['queue_days'] = (df['u_Opstart'] - df['CreatedDate']).dt.days
-    days_till_start = (df['u_Opstart'] - today).dt.days
-    days_till_start = days_till_start.where(df['u_Opstart'] >= today, 0)
-    days_till_start = days_till_start.fillna(0).clip(lower=0).astype(int)
-    df['days_till_start'] = days_till_start
-    offset_duration = (df['u_Afslutning'] - today).dt.days + 1
-    offset_duration = offset_duration.where(df['u_Opstart'] <= today, df['duration'])
-    offset_duration = offset_duration.fillna(0).clip(lower=0).astype(int)
-    df['offset_duration'] = offset_duration
+    df['open_days'] = (df['CloseDateTime'].dt.normalize() - df['CreatedDate'].dt.normalize()).dt.days + 1
+    df['duration'] = (df['u_Afslutning'].dt.normalize() - df['u_Opstart'].dt.normalize()).dt.days + 1
+    df['queue_days'] = (df['u_Opstart'].dt.normalize() - df['CreatedDate'].dt.normalize()).dt.days
     ticket_df = df.rename(columns={
         'ReferenceNo': 'id',
         'AgentGroup.Id': 'agent_group_id',
@@ -52,8 +43,6 @@ def create_ticket_df(df):
         'start_date',
         'end_date',
         'duration',
-        'days_till_start',
-        'offset_duration',
         'task_type_id',
         'task_area_id',
         'reason_for_rejection_id',

@@ -21,7 +21,9 @@ def format_df(df):
         'u_Afslutning']
     
     for col in date_cols:
-        df[col] = pd.to_datetime(df[col].str[:10], format="%Y-%m-%d", errors="coerce").dt.strftime("%Y-%m-%d")
+        dt = pd.to_datetime(df[col], errors='coerce', utc=True)
+        dt = dt.dt.tz_convert('Europe/Copenhagen')
+        df[col] = dt.dt.strftime('%Y-%m-%d')
 
     df['u_Opgavetype'] = (df['u_Opgavetype'].str.replace('Ticket.u_Opgavetype.', '', regex=False).str.replace('.DisplayNameId.label-en', '', regex=False))
     df['u_Omrder'] = (df['u_Omrder'].str.replace('Ticket.u_Omrder.', '', regex=False).str.replace('.DisplayNameId.label-en', '', regex=False))

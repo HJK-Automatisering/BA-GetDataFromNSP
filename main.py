@@ -22,6 +22,7 @@ from utils.api_fetch import api_fetch
 from utils.format_df import format_df
 from utils.get_engine import get_engine
 from utils.get_last_updated import get_last_updated
+from utils.update_tickets import update_tickets
 from utils.write_to_sql import write_to_sql
 logging.basicConfig(format='%(asctime)s - %(message)s', datefmt='%d-%m-%Y %H:%M:%S', level=logging.INFO)
 logging.info('Libraries imported')
@@ -41,6 +42,7 @@ def main():
         return
     df = format_df(df)
     write_to_sql(engine, df)
+    update_tickets(engine)
     return
  
 if __name__ == '__main__':
