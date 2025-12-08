@@ -35,6 +35,7 @@ Hver iteration i tjenesten udfører:
 - utils/get_engine.py – opretter SQLAlchemy-engine.
 - utils/get_last_updated.py – henter seneste timestamp fra databasen.
 - utils/write_to_sql.py – skriver hele datasættet til SQL.
+- utils/update_tickets.py - opdaterer dynamiske measures for alle åbne tickets.
 
 # Miljøvariabler
 
