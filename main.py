@@ -4,7 +4,7 @@ __maintainer__      = 'Anders H. Vestergaard'
 __author__          = 'Anders H. Vestergaard'
 __contributors__    = []
 __email__           = 'anders.vestergaard@hjoerring.dk'
-__version__         = '1.0.1'
+__version__         = '1.0.2'
 __status__          = 'Production'
 
 #######################################################################
@@ -18,7 +18,6 @@ Processen kører i en uendelig løkke med en pause mellem hver cyklus.
 #######################################################################
 
 import logging
-import sys
 import time
 
 import pandas as pd
@@ -30,35 +29,12 @@ from utils.format_df import format_df
 from utils.get_engine import get_engine
 from utils.get_last_updated import get_last_updated
 from utils.update_tickets import update_tickets
+from utils.setup_logging import setup_logging
 from utils.write_to_sql import write_to_sql
 
 #######################################################################
 
 logger = logging.getLogger(__name__)
-
-def setup_logging() -> None:
-    '''
-    Beskrivelse:
-        Initialiserer logging-konfiguration for applikationen.
-
-    Flow:
-        1. Konfigurerer root-logger til INFO-niveau.             
-        2. Logger til stdout med timestamps, niveau og modulnavn.
-
-    Args:
-        Ingen.                                                
-
-    Returns:
-        None.                                           
-
-    Raises:
-        None.                                                    
-    '''
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s [%(levelname)s] %(name)s - %(message)s',
-        datefmt='%d-%m-%Y %H:%M:%S',
-        handlers=[logging.StreamHandler(sys.stdout)])
 
 def main(engine: Engine) -> None:
     '''
