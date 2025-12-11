@@ -99,19 +99,25 @@ def create_ticket_df(df: pd.DataFrame) -> pd.DataFrame:
         'reason_for_rejection_id',
         'last_updated']]
 
-    int_cols: List[str] = [
-        'open_days',
-        'queue_days',
-        'duration',
+    id_cols: List[str] = [
         'agent_group_id',
         'task_status_id',
         'task_type_id',
         'task_area_id',
         'reason_for_rejection_id']
     
-    for col in int_cols:
+    for col in id_cols:
         ticket_df[col] = ticket_df[col].astype('object')
         ticket_df.loc[ticket_df[col] == 0, col] = None
+        ticket_df.loc[ticket_df[col].isna(), col] = None
+
+    int_cols: List[str] = [
+        'open_days',
+        'queue_days',
+        'duration']
+    
+    for col in int_cols:
+        ticket_df[col] = ticket_df[col].astype('object')
         ticket_df.loc[ticket_df[col].isna(), col] = None
     
     normalized_date_cols: List[str] = [
