@@ -57,9 +57,24 @@ def format_df(df: pd.DataFrame) -> pd.DataFrame:
             eller tekstkolonnerne til oprydning ikke findes i df.
     '''
     logger.info('Formaterer df')
+
     df = df.drop(columns=DROP_COLS, errors='ignore')
-    for col in DATE_COLS: # Overvej lige om logikken er korrekt her. Bør alle DATE_COLS ændre tid?
-        dt = pd.to_datetime(df[col], errors='coerce', utc=True)
+    for col in DATE_COLS:
+        if col not in df.columns:
+            logger.warning('Forventet datokolonne mangler: %s', col)
+            continue
+
+        raw = df[col].astype('string').str.strip()
+        parsed_values = []
+        for value in raw:
+            # value er enten en str eller pd.NA
+            if value is pd.NA or value == '':
+                parsed_values.append(pd.NaT)
+            else:
+                parsed_values.append(
+                    pd.to_datetime(value, errors='coerce', utc=True))
+
+        dt = pd.Series(parsed_values, index=df.index)
         dt = dt.dt.tz_convert(TIMEZONE)
         df[col] = dt.dt.strftime(DATE_FORMAT)
 
