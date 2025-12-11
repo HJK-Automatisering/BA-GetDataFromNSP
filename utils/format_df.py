@@ -57,7 +57,6 @@ def format_df(df: pd.DataFrame) -> pd.DataFrame:
             eller tekstkolonnerne til oprydning ikke findes i df.
     '''
     logger.info('Formaterer df')
-
     df = df.drop(columns=DROP_COLS, errors='ignore')
     for col in DATE_COLS:
         if col not in df.columns:
